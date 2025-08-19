@@ -1,4 +1,4 @@
-#!/usr/bin/env -vS node --import=tsx
+#!/usr/bin/env -S node --import=tsx
 import inquirer from "inquirer";
 import degit from "degit";
 import { execSync } from "node:child_process";

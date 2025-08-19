@@ -11,7 +11,7 @@
     "prepare": "husky"
   },
   "bin": {
-    "create-template": "tsx ./scripts/createTemplate.mts"
+    "create-template": "./scripts/createTemplate.mts"
   },
   "repository": {
     "type": "git",

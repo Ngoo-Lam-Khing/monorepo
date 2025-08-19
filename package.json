@@ -11,7 +11,7 @@
     "prepare": "husky"
   },
   "bin": {
-    "create-template": "./scripts/createTemplate.mts"
+    "create-template": "tsx ./scripts/createTemplate.mts"
   },
   "repository": {
     "type": "git",
@@ -45,6 +45,7 @@
     "lint-staged": "^16.1.5",
     "prettier": "3.6.2",
     "tsc": "^2.0.4",
+    "tsx": "^4.20.4",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.40.0",
     "vue-eslint-parser": "^10.2.0"

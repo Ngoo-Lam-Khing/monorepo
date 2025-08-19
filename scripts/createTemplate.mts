@@ -1,24 +1,29 @@
 #!/usr/bin/env -S node --import=tsx
 import inquirer from "inquirer";
 import degit from "degit";
-import { execSync } from "node:child_process";
+import axios from "axios";
+// import { execSync } from "node:child_process";
 
-const repo = "https://github.com/Ngoo-Lam-Khing/monorepo"; // 你的 GitLab repo (改掉這個)
-const branch = "main"; // 預設 branch
+const REPO_URL = "github.com/Ngoo-Lam-Khing/monorepo";
+const GITHUB_API_URL =
+  "https://api.github.com/repos/Ngoo-Lam-Khing/monorepo/contents/packages";
+const BRANCH = "main";
 
-async function getTemplates() {
+async function getTemplates(): Promise<string[]> {
   try {
-    // 使用 Git 命令列出遠端儲存庫的 packages 資料夾內容
-    const templates = execSync(`git ls-remote --heads ${repo} packages/*`)
-      .toString()
-      .split("\n")
-      .filter((line) => line.includes("packages/"))
-      .map((line) => line.split("packages/")[1])
-      .filter((name) => name);
-
+    // Fetch the contents of the packages folder using GitHub API
+    const response = await axios.get(GITHUB_API_URL, {
+      headers: {
+        Accept: "application/vnd.github.v3+json",
+      },
+    });
+    const templates = response.data
+      .filter((item: Record<string, string>) => item.type === "dir")
+      .map((item: Record<string, string>) => item.name);
     return templates;
   } catch (error) {
     console.error("Error fetching templates:", error);
+    // Fallback to default templates
     return [];
   }
 }
@@ -56,7 +61,7 @@ async function main() {
   console.log(`🚀 正在下載模板 ${template} ...`);
 
   // 用 degit 抓對應的資料夾
-  const emitter = degit(`${repo}/packages/${template}#${branch}`, {
+  const emitter = degit(`${REPO_URL}/packages/${template}#${BRANCH}`, {
     cache: false,
     force: true,
   });

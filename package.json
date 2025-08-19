@@ -1,0 +1,37 @@
+{
+  "name": "frontend-templates",
+  "version": "1.0.0",
+  "scripts": {
+    "format": "prettier --config=$INIT_CWD/prettier.config.mjs --write $INIT_CWD",
+    "format-check": "prettier --config=$INIT_CWD/prettier.config.mjs --check $INIT_CWD",
+    "lint": "eslint --config=$INIT_CWD/eslint.config.mts $INIT_CWD",
+    "lint-fix": "eslint --config=$INIT_CWD/eslint.config.mts $INIT_CWD --fix",
+    "type-check": "tsc -p $INIT_CWD/tsconfig.json --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ngoo-Lam-Khing/monorepo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ngoo-Lam-Khing/monorepo/issues"
+  },
+  "homepage": "https://github.com/Ngoo-Lam-Khing/monorepo#readme",
+  "description": "",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.0.0",
+    "yarn": ">=4.9.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-vue": "^10.4.0",
+    "globals": "^16.3.0",
+    "jiti": "^2.5.1",
+    "typescript-eslint": "^8.40.0"
+  }
+}

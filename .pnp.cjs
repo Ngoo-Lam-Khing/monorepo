@@ -37,6 +37,7 @@ const RAW_RUNTIME_STATE =
           ["jiti", "npm:2.5.1"],\
           ["lint-staged", "npm:16.1.5"],\
           ["prettier", "npm:3.6.2"],\
+          ["tsc", "npm:2.0.4"],\
           ["typescript", "patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"],\
           ["typescript-eslint", "virtual:ca9e6a0de0ec501f237e41891f8513d52dc0c73c3b1d26081f3fd8381c82f77ad4396d658451a33ddaae753dfd8f2b0d0f0df2dfb4e2734114c062834021cc7c#npm:8.40.0"],\
           ["vue-eslint-parser", "virtual:ca9e6a0de0ec501f237e41891f8513d52dc0c73c3b1d26081f3fd8381c82f77ad4396d658451a33ddaae753dfd8f2b0d0f0df2dfb4e2734114c062834021cc7c#npm:10.2.0"]\
@@ -1093,6 +1094,7 @@ const RAW_RUNTIME_STATE =
           ["jiti", "npm:2.5.1"],\
           ["lint-staged", "npm:16.1.5"],\
           ["prettier", "npm:3.6.2"],\
+          ["tsc", "npm:2.0.4"],\
           ["typescript", "patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"],\
           ["typescript-eslint", "virtual:ca9e6a0de0ec501f237e41891f8513d52dc0c73c3b1d26081f3fd8381c82f77ad4396d658451a33ddaae753dfd8f2b0d0f0df2dfb4e2734114c062834021cc7c#npm:8.40.0"],\
           ["vue-eslint-parser", "virtual:ca9e6a0de0ec501f237e41891f8513d52dc0c73c3b1d26081f3fd8381c82f77ad4396d658451a33ddaae753dfd8f2b0d0f0df2dfb4e2734114c062834021cc7c#npm:10.2.0"]\
@@ -1808,6 +1810,15 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@types/typescript",\
           "typescript"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["tsc", [\
+      ["npm:2.0.4", {\
+        "packageLocation": "../../.yarn/berry/cache/tsc-npm-2.0.4-e331b066cb-10c0.zip/node_modules/tsc/",\
+        "packageDependencies": [\
+          ["tsc", "npm:2.0.4"]\
         ],\
         "linkType": "HARD"\
       }]\

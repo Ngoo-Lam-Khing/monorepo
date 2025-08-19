@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env -vS node --import=tsx
 import inquirer from "inquirer";
 import degit from "degit";
 import { execSync } from "node:child_process";
@@ -7,21 +7,20 @@ const repo = "https://github.com/Ngoo-Lam-Khing/monorepo"; // 你的 GitLab repo
 const branch = "main"; // 預設 branch
 
 async function getTemplates() {
-  // ⚠️ 如果是 GitHub: https://api.github.com/repos/<user>/<repo>/contents/packages
-  // ⚠️ 如果是 GitLab，要用 raw API: https://gitlab.com/api/v4/projects/:id/repository/tree?path=packages
-  // 這邊我先示範 GitHub 的寫法
-  const res = await fetch(
-    `https://api.github.com/repos/Ngoo-Lam-Khing/monorepo/contents/packages?ref=${branch}`,
-  );
-  const data = await res.json();
+  try {
+    // 使用 Git 命令列出遠端儲存庫的 packages 資料夾內容
+    const templates = execSync(`git ls-remote --heads ${repo} packages/*`)
+      .toString()
+      .split("\n")
+      .filter((line) => line.includes("packages/"))
+      .map((line) => line.split("packages/")[1])
+      .filter((name) => name);
 
-  if (!Array.isArray(data)) {
-    throw new Error(
-      "無法讀取 templates，請確認 repo 是否公開或 API token 設定正確。",
-    );
+    return templates;
+  } catch (error) {
+    console.error("Error fetching templates:", error);
+    return [];
   }
-
-  return data.filter((item) => item.type === "dir").map((item) => item.name);
 }
 
 async function main() {
@@ -32,13 +31,14 @@ async function main() {
     console.error("❌ 沒有找到任何模板資料夾");
     process.exit(1);
   }
+
   // 讓使用者選 template
   const { template } = await inquirer.prompt([
     {
       type: "list",
       name: "template",
       message: "請選擇要建立的模板：",
-      choices: templates,
+      choices: templates as string[],
     },
   ]);
 
@@ -61,26 +61,33 @@ async function main() {
     force: true,
   });
 
-  await emitter.clone(dest);
+  try {
+    console.log(`🚀 正在下載模板 ${template} ...`);
+    await emitter.clone(dest);
+    console.log("🎉 一切搞定！開始開發吧！");
+  } catch (error) {
+    console.error("Error cloning template:", error);
+    process.exit(1);
+  }
 
   console.log(`✅ 專案建立完成：${dest}`);
 
   // 問要不要安裝依賴
-  const { installDeps } = await inquirer.prompt([
-    {
-      type: "confirm",
-      name: "installDeps",
-      message: "要馬上安裝依賴嗎？",
-      default: true,
-    },
-  ]);
+  // const { installDeps } = await inquirer.prompt([
+  //   {
+  //     type: "confirm",
+  //     name: "installDeps",
+  //     message: "要馬上安裝依賴嗎？",
+  //     default: true,
+  //   },
+  // ]);
 
-  if (installDeps) {
-    console.log("📦 安裝依賴中...");
-    execSync("yarn install", { cwd: dest, stdio: "inherit" });
-  }
+  // if (installDeps) {
+  //   console.log("📦 安裝依賴中...");
+  //   execSync("yarn install", { cwd: dest, stdio: "inherit" });
+  // }
 
-  console.log("🎉 一切搞定！開始開發吧！");
+  // console.log("🎉 一切搞定！開始開發吧！");
 }
 
 main();

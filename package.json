@@ -1,6 +1,7 @@
 {
   "name": "frontend-templates",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "format": "prettier --config=$INIT_CWD/prettier.config.mjs --write $INIT_CWD",
     "format-check": "prettier --config=$INIT_CWD/prettier.config.mjs --check $INIT_CWD",
@@ -8,6 +9,9 @@
     "lint-fix": "eslint --config=$INIT_CWD/eslint.config.mts $INIT_CWD --fix",
     "type-check": "tsc -p $INIT_CWD/tsconfig.json --noEmit",
     "prepare": "husky"
+  },
+  "bin": {
+    "create-template": "./scripts/createTemplate.mts"
   },
   "repository": {
     "type": "git",
@@ -29,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@types/degit": "^2",
     "@types/node": "^24.3.0",
     "eslint": "^9.33.0",
     "eslint-config-prettier": "^10.1.8",
@@ -47,5 +52,9 @@
   "lint-staged": {
     "**/*.{js,mjs,cjs,ts,mts,cts,vue}": "eslint --fix",
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "dependencies": {
+    "degit": "^2.8.4",
+    "inquirer": "^12.9.3"
   }
 }
